@@ -3,7 +3,6 @@ using JWTTokenBaseAuthentication.Models;
 using JWTTokenBaseAuthentication.Services.IServices;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using Org.BouncyCastle.Crypto.Generators;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -83,6 +82,18 @@ namespace JWTTokenBaseAuthentication.Services
             }
 
             var token = GenerateToken(user);
+            return new LoginResponseDto
+            {
+                Token= token,
+                User= new UserResponseDto
+                {
+                  Id=user.Id,
+                  FirstName = user.FirstName,
+                  LastName = user.LastName,
+                  Username=user.Username,   
+                  Role = user.Role,
+                }
+            };
 
         }
 
@@ -129,9 +140,10 @@ namespace JWTTokenBaseAuthentication.Services
 
             var token = new JwtSecurityToken(
 
-                issuer: jwtSettings[""],
-                audience: jwtSettings[""],
-                expires: DateTime.Now.AddMinutes(Convert.ToDouble(jwtSettings[""])),
+                issuer: jwtSettings["Issuer"],
+                audience: jwtSettings["Audience"],
+                expires: DateTime.Now.AddMinutes(Convert.ToDouble(jwtSettings["ExpiryMinutes"])),
+                claims: claim,
                 signingCredentials: creds
                 );
 
