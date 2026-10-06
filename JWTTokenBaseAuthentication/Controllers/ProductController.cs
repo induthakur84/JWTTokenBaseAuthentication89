@@ -21,6 +21,7 @@ namespace JWTTokenBaseAuthentication.Controllers
     [ApiController]
     public class ProductController(IProductInterface productInterface) : ControllerBase
     {
+        [Authorize(Policy ="AdminOnly")]
         [HttpGet("GetAll")]
         public async Task<IActionResult> GetAll()
         {
@@ -42,6 +43,7 @@ namespace JWTTokenBaseAuthentication.Controllers
             return Ok(result);
         }
 
+        [Authorize(Roles = "User")]
         [HttpPut("Update")]
         public async  Task<IActionResult> Update(ProductUpdateDto productUpdateDto)
         {
@@ -49,6 +51,7 @@ namespace JWTTokenBaseAuthentication.Controllers
             return Ok(result);
         }
 
+        [Authorize(Roles = "Employee")]
         [HttpDelete("Delete")]
         public async Task<IActionResult>Delete(int id)
         {

@@ -72,7 +72,8 @@ namespace JWTTokenBaseAuthentication.Services
                 throw new Exception("User Not Fount");
             }
 
-            bool isValid = BCrypt.Net.BCrypt.Verify(loginRequestDto.Password, user.Password);
+            bool isValid = BCrypt.Net.BCrypt.Verify(loginRequestDto.Password, 
+                user.Password);
 
             // if the passwrod is not valid that throw the error
 
