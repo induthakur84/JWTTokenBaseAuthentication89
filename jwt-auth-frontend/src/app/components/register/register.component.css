@@ -1,0 +1,30 @@
+.register-container {
+  max-width: 480px;
+  margin-top: 40px;
+}
+
+.subtitle {
+  color: #7f8c8d;
+  font-size: 13px;
+  margin-bottom: 15px;
+}
+
+.form-row {
+  display: flex;
+  gap: 12px;
+}
+
+.col {
+  flex: 1;
+}
+
+.btn-block {
+  width: 100%;
+  margin-top: 10px;
+}
+
+.footer-link {
+  text-align: center;
+  margin-top: 15px;
+  font-size: 13px;
+}

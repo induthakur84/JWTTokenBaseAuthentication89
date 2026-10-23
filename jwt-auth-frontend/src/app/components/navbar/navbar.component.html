@@ -1,0 +1,19 @@
+<nav class="navbar">
+  <div class="nav-brand">
+    <a routerLink="/">JWT Auth Practical</a>
+  </div>
+
+  <div class="nav-links">
+    @if (!authService.isLoggedIn()) {
+      <a routerLink="/login" routerLinkActive="active">Login</a>
+      <a routerLink="/register" routerLinkActive="active">Register</a>
+    } @else {
+      <a routerLink="/products" routerLinkActive="active">Products (Protected)</a>
+      <span class="user-text">
+        User: <strong>{{ authService.currentUser()?.username }}</strong>
+        ({{ authService.userRole() }})
+      </span>
+      <button (click)="logout()" class="btn btn-danger btn-sm">Logout</button>
+    }
+  </div>
+</nav>

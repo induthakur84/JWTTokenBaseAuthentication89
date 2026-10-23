@@ -1,0 +1,29 @@
+.login-container {
+  max-width: 420px;
+  margin-top: 50px;
+}
+
+.subtitle {
+  color: #7f8c8d;
+  font-size: 13px;
+  margin-bottom: 15px;
+}
+
+.demo-buttons {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 15px;
+  font-size: 13px;
+}
+
+.btn-block {
+  width: 100%;
+  margin-top: 10px;
+}
+
+.footer-link {
+  text-align: center;
+  margin-top: 15px;
+  font-size: 13px;
+}

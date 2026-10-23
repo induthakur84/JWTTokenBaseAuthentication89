@@ -1,0 +1,93 @@
+<div class="container register-container">
+  <div class="card">
+    <h2>Register User</h2>
+    <p class="subtitle">Create a new user with a specific Role to test JWT claims</p>
+
+    @if (errorMessage) {
+      <div class="alert alert-danger">{{ errorMessage }}</div>
+    }
+
+    <form (ngSubmit)="onSubmit()">
+      <div class="form-row">
+        <div class="form-group col">
+          <label>First Name</label>
+          <input
+            type="text"
+            name="firstName"
+            [(ngModel)]="model.firstName"
+            class="form-control"
+            placeholder="John"
+            required
+          />
+        </div>
+
+        <div class="form-group col">
+          <label>Last Name</label>
+          <input
+            type="text"
+            name="lastName"
+            [(ngModel)]="model.lastName"
+            class="form-control"
+            placeholder="Doe"
+            required
+          />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Username</label>
+        <input
+          type="text"
+          name="username"
+          [(ngModel)]="model.username"
+          class="form-control"
+          placeholder="johndoe"
+          required
+        />
+      </div>
+
+      <div class="form-group">
+        <label>Role (Claim added to JWT)</label>
+        <select name="role" [(ngModel)]="model.role" class="form-control" required>
+          <option value="Admin">Admin</option>
+          <option value="Employee">Employee</option>
+          <option value="User">User</option>
+        </select>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group col">
+          <label>Password</label>
+          <input
+            type="password"
+            name="password"
+            [(ngModel)]="model.password"
+            class="form-control"
+            placeholder="Password"
+            required
+          />
+        </div>
+
+        <div class="form-group col">
+          <label>Confirm Password</label>
+          <input
+            type="password"
+            name="confirmPassword"
+            [(ngModel)]="model.confirmPassword"
+            class="form-control"
+            placeholder="Confirm Password"
+            required
+          />
+        </div>
+      </div>
+
+      <button type="submit" [disabled]="isLoading" class="btn btn-primary btn-block">
+        {{ isLoading ? 'Registering...' : 'Register' }}
+      </button>
+    </form>
+
+    <div class="footer-link">
+      Already have an account? <a routerLink="/login">Login here</a>
+    </div>
+  </div>
+</div>

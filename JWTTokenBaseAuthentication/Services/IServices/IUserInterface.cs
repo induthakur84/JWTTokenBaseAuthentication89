@@ -2,6 +2,10 @@
 
 namespace JWTTokenBaseAuthentication.Services.IServices
 {
+
+    //[AddScoped]
+    //[AddSingleton]
+    //[AddTransient]
     public interface IUserInterface
     {
         Task<UserResponseDto> Register(UserRegisterDto userRegisterDto);

@@ -1,0 +1,223 @@
+<div class="container">
+  <!-- Top Welcome Banner -->
+  <div class="welcome-banner">
+    <div class="welcome-text">
+      <span class="welcome-badge">🎓 Active Session</span>
+      <h1>Welcome, {{ authService.currentUser()?.firstName }} {{ authService.currentUser()?.lastName }}!</h1>
+      <p class="welcome-sub">
+        You are authenticated with username <code>{{ authService.currentUser()?.username }}</code> and role:
+        <span class="badge" [class]="'badge-' + authService.userRole().toLowerCase()">{{ authService.userRole() }}</span>
+      </p>
+    </div>
+    <div class="welcome-actions">
+      <a routerLink="/products" class="btn btn-primary">
+        <span>🧪</span> Test Protected API
+      </a>
+      <button (click)="logout()" class="btn btn-secondary">
+        <span>🚪</span> Log Out
+      </button>
+    </div>
+  </div>
+
+  @if (tamperMessage) {
+    <div class="alert alert-warning">
+      <span>⚠️</span>
+      <div>{{ tamperMessage }}</div>
+    </div>
+  }
+
+  <!-- Grid of Main Content -->
+  <div class="dashboard-grid">
+    <!-- JWT Token Visualizer Card -->
+    <div class="card token-card">
+      <div class="card-header">
+        <div class="title-with-icon">
+          <span class="icon">🔍</span>
+          <div>
+            <h3 class="card-title">Live JWT Token Inspector</h3>
+            <p class="card-subtitle">Anatomy of your JSON Web Token received from .NET API</p>
+          </div>
+        </div>
+        <div class="token-actions">
+          <button (click)="copyToken()" class="btn btn-sm btn-secondary" title="Copy to clipboard">
+            {{ copySuccess ? '✓ Copied!' : '📋 Copy Token' }}
+          </button>
+          <button (click)="tamperToken()" class="btn btn-sm btn-danger" title="Simulate a hacked token">
+            🧪 Tamper Token (Lab Test)
+          </button>
+        </div>
+      </div>
+
+      <!-- Raw Token Display with JWT.io-style color coding -->
+      <div class="token-raw-container">
+        <div class="token-legend">
+          <span class="legend-item"><span class="dot dot-header"></span> Header (Algorithm & Type)</span>
+          <span class="legend-item"><span class="dot dot-payload"></span> Payload (Data & Claims)</span>
+          <span class="legend-item"><span class="dot dot-signature"></span> Signature (Secret Verification)</span>
+        </div>
+        <div class="token-raw-box">
+          @if (tokenParts) {
+            <span class="part-header">{{ tokenParts.header }}</span><span class="separator">.</span><span class="part-payload">{{ tokenParts.payload }}</span><span class="separator">.</span><span class="part-signature">{{ tokenParts.signature }}</span>
+          } @else {
+            <code>{{ rawToken }}</code>
+          }
+        </div>
+      </div>
+
+      <!-- Decoded 3 Parts Breakdown -->
+      @if (decoded) {
+        <div class="decoded-grid">
+          <!-- 1. Header Box -->
+          <div class="decoded-box border-header">
+            <div class="decoded-box-title text-header">
+              <span>🔴 1. HEADER</span>
+              <span class="tag">Base64Url Decoded</span>
+            </div>
+            <pre class="json-code"><code>{{ decoded.header | json }}</code></pre>
+            <p class="box-desc">Contains hashing algorithm (HS256) and token type (JWT).</p>
+          </div>
+
+          <!-- 2. Payload Box -->
+          <div class="decoded-box border-payload">
+            <div class="decoded-box-title text-payload">
+              <span>🟣 2. PAYLOAD (CLAIMS)</span>
+              <span class="tag">Base64Url Decoded</span>
+            </div>
+            <pre class="json-code"><code>{{ decoded.payload | json }}</code></pre>
+            <p class="box-desc">Contains claims embedded by .NET: Username, Role, and Expiry.</p>
+          </div>
+
+          <!-- 3. Signature Box -->
+          <div class="decoded-box border-signature">
+            <div class="decoded-box-title text-signature">
+              <span>🔵 3. SIGNATURE</span>
+              <span class="tag">HMACSHA256</span>
+            </div>
+            <div class="signature-display">
+              <code>HMACSHA256(</code><br>
+              <code>&nbsp;&nbsp;base64UrlEncode(header) + "." +</code><br>
+              <code>&nbsp;&nbsp;base64UrlEncode(payload),</code><br>
+              <code>&nbsp;&nbsp;SecretKey /* Kept safe on server */</code><br>
+              <code>)</code>
+            </div>
+            <p class="box-desc">Guarantees token has not been altered by the client or man-in-the-middle.</p>
+          </div>
+        </div>
+      }
+    </div>
+
+    <!-- Live Status & Expiry Panel -->
+    <div class="card status-card">
+      <div class="card-header">
+        <h3 class="card-title">⏱️ Token Lifetime Status</h3>
+        <span class="badge" [class.badge-admin]="!isExpired" [class.badge-danger]="isExpired">
+          {{ isExpired ? 'EXPIRED' : 'ACTIVE' }}
+        </span>
+      </div>
+
+      <div class="countdown-widget" [class.countdown-warning]="isExpired">
+        <div class="countdown-label">Time Until Token Expiration:</div>
+        <div class="countdown-timer">{{ timeRemaining }}</div>
+        <div class="expiry-detail">
+          <span>Expires At:</span>
+          <strong>{{ formatDate(decoded?.payload?.exp) }}</strong>
+        </div>
+      </div>
+
+      <!-- Claims summary list -->
+      <div class="claims-summary">
+        <h4>🔖 Active Claims in this Token</h4>
+        <ul class="claims-list">
+          <li>
+            <span class="claim-key">Role Claim:</span>
+            <span class="badge" [class]="'badge-' + authService.userRole().toLowerCase()">{{ authService.userRole() }}</span>
+          </li>
+          <li>
+            <span class="claim-key">Username:</span>
+            <code>{{ authService.currentUser()?.username }}</code>
+          </li>
+          <li>
+            <span class="claim-key">Full Name:</span>
+            <span>{{ authService.currentUser()?.firstName }} {{ authService.currentUser()?.lastName }}</span>
+          </li>
+          <li>
+            <span class="claim-key">Issuer (iss):</span>
+            <code>{{ decoded?.payload?.iss || 'N/A' }}</code>
+          </li>
+          <li>
+            <span class="claim-key">Audience (aud):</span>
+            <code>{{ decoded?.payload?.aud || 'N/A' }}</code>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Role Permission Preview -->
+      <div class="permission-preview">
+        <h4>🛡️ Role Access Preview</h4>
+        <div class="permission-item">
+          <span>GET /api/Product/GetAll:</span>
+          @if (authService.hasRole('Admin') || authService.hasRole('Employee')) {
+            <span class="status-allowed">✓ Allowed (Admin/Employee)</span>
+          } @else {
+            <span class="status-denied">✗ Denied (403 Forbidden)</span>
+          }
+        </div>
+        <div class="permission-item">
+          <span>POST /api/Product/Add:</span>
+          @if (authService.hasRole('Admin')) {
+            <span class="status-allowed">✓ Allowed (Admin only)</span>
+          } @else {
+            <span class="status-denied">✗ Denied (403 Forbidden)</span>
+          }
+        </div>
+        <div class="permission-item">
+          <span>DELETE /api/Product/Delete:</span>
+          @if (authService.hasRole('Employee')) {
+            <span class="status-allowed">✓ Allowed (Employee only)</span>
+          } @else {
+            <span class="status-denied">✗ Denied (403 Forbidden)</span>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Educational Section for Classroom Teaching -->
+  <div class="card edu-architecture-card">
+    <div class="card-header">
+      <div class="title-with-icon">
+        <span class="icon">📚</span>
+        <div>
+          <h3 class="card-title">Classroom Explanation: How JWT Works in Angular + .NET</h3>
+          <p class="card-subtitle">Explain these 4 steps to your students</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <h4>User Authenticates</h4>
+        <p>Student fills in username & password on Login page. Angular sends <code>POST /api/User/Login</code> over HTTPS.</p>
+      </div>
+
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <h4>.NET Issues Signed JWT</h4>
+        <p>The backend verifies password hash using BCrypt. It builds claims (<code>Role</code>, <code>Username</code>) and signs with <code>SecretKey</code>.</p>
+      </div>
+
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <h4>Stored & Intercepted</h4>
+        <p>Angular stores token in <code>localStorage</code>. The <code>jwtInterceptor</code> attaches <code>Authorization: Bearer &lt;token&gt;</code> to every request.</p>
+      </div>
+
+      <div class="step-card">
+        <div class="step-num">4</div>
+        <h4>Role Authorization</h4>
+        <p>ASP.NET Core verifies signature and checks <code>[Authorize(Roles = "Admin")]</code>. If role matches, it returns <code>200 OK</code>; otherwise <code>403 Forbidden</code>.</p>
+      </div>
+    </div>
+  </div>
+</div>

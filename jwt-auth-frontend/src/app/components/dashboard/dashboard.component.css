@@ -1,0 +1,329 @@
+.welcome-banner {
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.15), rgba(168, 85, 247, 0.1));
+  border: 1px solid rgba(99, 102, 241, 0.25);
+  border-radius: var(--radius-lg);
+  padding: 28px 32px;
+  margin-bottom: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.welcome-badge {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--primary);
+  background: rgba(99, 102, 241, 0.1);
+  padding: 4px 10px;
+  border-radius: 20px;
+  margin-bottom: 8px;
+}
+
+.welcome-banner h1 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.welcome-sub {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+}
+
+.welcome-sub code {
+  color: #38bdf8;
+  font-weight: 600;
+}
+
+.welcome-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+@media (max-width: 960px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.title-with-icon {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.title-with-icon .icon {
+  font-size: 1.8rem;
+}
+
+.token-card {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.token-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.token-raw-container {
+  background: #060911;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  padding: 16px;
+}
+
+.token-legend {
+  display: flex;
+  gap: 16px;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.dot-header { background-color: var(--jwt-header); }
+.dot-payload { background-color: var(--jwt-payload); }
+.dot-signature { background-color: var(--jwt-signature); }
+
+.token-raw-box {
+  word-break: break-all;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.85rem;
+  line-height: 1.6;
+  max-height: 120px;
+  overflow-y: auto;
+}
+
+.part-header { color: var(--jwt-header); font-weight: 600; }
+.part-payload { color: var(--jwt-payload); font-weight: 600; }
+.part-signature { color: var(--jwt-signature); font-weight: 600; }
+.separator { color: var(--text-dim); }
+
+.decoded-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+.decoded-box {
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: var(--radius-sm);
+  padding: 16px;
+  border-left: 4px solid;
+}
+
+.border-header { border-left-color: var(--jwt-header); }
+.border-payload { border-left-color: var(--jwt-payload); }
+.border-signature { border-left-color: var(--jwt-signature); }
+
+.decoded-box-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.85rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.text-header { color: var(--jwt-header); }
+.text-payload { color: var(--jwt-payload); }
+.text-signature { color: var(--jwt-signature); }
+
+.tag {
+  font-size: 0.7rem;
+  font-weight: normal;
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--text-muted);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.json-code {
+  background: #060911;
+  padding: 12px;
+  border-radius: 6px;
+  font-size: 0.82rem;
+  color: #e2e8f0;
+  max-height: 180px;
+  overflow-y: auto;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.signature-display {
+  background: #060911;
+  padding: 12px;
+  border-radius: 6px;
+  font-size: 0.82rem;
+  color: #38bdf8;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.box-desc {
+  margin-top: 8px;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+.countdown-widget {
+  background: rgba(99, 102, 241, 0.08);
+  border: 1px solid rgba(99, 102, 241, 0.2);
+  border-radius: var(--radius-sm);
+  padding: 18px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.countdown-warning {
+  background: rgba(239, 68, 68, 0.1);
+  border-color: rgba(239, 68, 68, 0.3);
+}
+
+.countdown-label {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.countdown-timer {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: #a5b4fc;
+  font-family: 'JetBrains Mono', monospace;
+  margin: 6px 0;
+}
+
+.countdown-warning .countdown-timer {
+  color: #ef4444;
+}
+
+.expiry-detail {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+}
+
+.claims-summary {
+  margin-bottom: 20px;
+}
+
+.claims-summary h4, .permission-preview h4 {
+  font-size: 0.9rem;
+  color: var(--text-main);
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+
+.claims-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.claims-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.85rem;
+  padding: 6px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.claim-key {
+  color: var(--text-muted);
+}
+
+.permission-preview {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.permission-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.82rem;
+  background: rgba(255, 255, 255, 0.02);
+  padding: 8px 12px;
+  border-radius: 6px;
+}
+
+.status-allowed {
+  color: var(--success);
+  font-weight: 600;
+}
+
+.status-denied {
+  color: var(--danger);
+  font-weight: 600;
+}
+
+.steps-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.step-card {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  padding: 20px;
+  position: relative;
+}
+
+.step-num {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--primary);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.85rem;
+  margin-bottom: 12px;
+}
+
+.step-card h4 {
+  font-size: 0.95rem;
+  margin-bottom: 8px;
+}
+
+.step-card p {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.step-card code {
+  color: #38bdf8;
+}
