@@ -1,22 +1,10 @@
 ﻿using JWTTokenBaseAuthentication.DTO;
 using JWTTokenBaseAuthentication.Services.IServices;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace JWTTokenBaseAuthentication.Controllers
 {
-    //[Route("api/[controller]")]
-    //[ApiController]
-    //public class ProductController : ControllerBase
-    //{
-    //    private readonly IProductInterface _productInterface;
-    //    public ProductController(IProductInterface productInterface)
-    //    {
-    //        _productInterface = productInterface;
-    //    }
-    //}
-
     [Route("api/[controller]")]
     [ApiController]
     public class ProductController(IProductInterface productInterface) : ControllerBase
